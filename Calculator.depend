@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1612185066 source:c:\users\admin\documents\github\kalkulator\main.cpp
+1612192315 source:c:\users\admin\documents\github\kalkulator\main.cpp
 	<tchar.h>
 	<windows.h>
 	<string>
