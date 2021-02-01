@@ -58,7 +58,7 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
            0,                   /* Extended possibilites for variation */
            szClassName,         /* Classname */
            _T("Kalkulator"),       /* Title Text */
-           WS_OVERLAPPEDWINDOW, /* default window */
+           WS_MINIMIZEBOX | WS_SYSMENU, /* default window */
            CW_USEDEFAULT,       /* Windows decides the position */
            CW_USEDEFAULT,       /* where the window ends up on the screen */
            290,                 /* The programs width */
