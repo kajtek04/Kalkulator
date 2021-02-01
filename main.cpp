@@ -16,7 +16,7 @@ HWND button1, button2, button3, button4, button5, button6, button7, button8, but
 HWND buttonClear, buttonPlus, buttonEqual, buttonMinus, buttonMulti, buttonDivis, buttonDot, buttonErase, buttonSquare, buttonsqrt;
 std::string text1, text2;
 long double num1, num2;
-bool des, IsSwapped=false;
+bool des, IsSwapped=false, IsNegative=0;
 char op;
 
 
@@ -106,7 +106,7 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
             liczba = CreateWindow("STATIC",
                         text1.c_str(),
                         WS_VISIBLE | WS_CHILD | WS_BORDER,
-                        20, 20, 230, 20,
+                        75, 20, 156, 20,
                         hwnd, NULL, NULL, NULL);
             button0 = CreateWindow("BUTTON",
                             "0",
@@ -213,8 +213,6 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
 
         case WM_COMMAND:
 
-            des=DestroyWindow(liczba);
-
             switch(LOWORD(wParam)){
 
                 case 0: text1.push_back('0'); break;
@@ -263,17 +261,28 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
                 case 15: operation('d'); break;
 
                 case 19:
-                    if(text1[0]=='-') text1.erase(0, 1);
-                    else text1.insert(0, "-");
+                    if(!IsNegative) IsNegative=1;
+                    else IsNegative=0;
 
                 break;
 
             }
 
+            if(IsNegative==0 && text1[0]=='-') text1.erase(0,1);
+
+            if(text1.size()>19){
+                MessageBox(hwnd, "zbyt dluga liczba, wyswietlono tylko pierwsze cyfry", "Blad", MB_OK);
+                while(text1.size()>19) text1.pop_back();
+            }
+
+            if(IsNegative==1 && text1[0]!='-') text1.insert(0, "-");
+
+            des=DestroyWindow(liczba);
+
             liczba =CreateWindow("STATIC",
                     text1.c_str(),
                     WS_VISIBLE | WS_CHILD | WS_BORDER,
-                    20, 20, 230, 20,
+                    75, 20, 156, 20,
                     hwnd, NULL, NULL, NULL);
 
 
